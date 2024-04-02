@@ -67,7 +67,13 @@ const advertisementsData=[
   }
 ];
 
-function createCard(advertisement){
+function renderAdvertisements(){
+  while(advertisementsContainer.firstChild){
+    advertisementsContainer.removeChild(advertisementsContainer.firstChild);
+  }
+
+  //Create cards for each advertisement
+  advertisementsData.forEach(function(advertisement,index ){
 
   //Create card element
   const card = document.createElement("div");
@@ -142,9 +148,18 @@ function createCard(advertisement){
 
     //Append the card to the parent element
     advertisementsContainer.appendChild(card);
+
+    //Add a clearfix div after every 3rd element
+    if((index+1)%3 ===0){
+      const clearfix = document.createElement("div");
+      clearfix.classList.add("clearfix");
+      advertisementsContainer.appendChild(clearfix);
+    }
+  });
 }
-//Create cards for each advertisement
-advertisementsData.forEach(createCard);
+
+//Render ads initially
+renderAdvertisements();
 
 //Function for filtering
 function filterAdvertisements(){
@@ -160,7 +175,6 @@ function filterAdvertisements(){
     }
   });
 }
-
 
 filterInput.addEventListener("keyup",filterAdvertisements);
 });
