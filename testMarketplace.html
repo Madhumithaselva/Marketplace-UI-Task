@@ -16,13 +16,32 @@
     .card-footer {
       background-color: #f8f9fa; /* Background color for the card footer */
     }
+    .card:hover{
+        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    }
+    .card-title{
+        font-weight: bold;
+        color: #333;
+    }
+    .card-text{
+        color: #666;
+    }
+    .btn-details{
+        background-color: #007bff ;
+        color: #fff;
+        border: none;
+        transition: background-color 0.3s ease;
+    }
+    .btn-details:hover{
+        background-color: #0056b3;
+    }
   </style>
 </head>
 <body>
     <div class ="container mt-5">
         <h2 class="mb-4">Advertisement List</h2>
         <!--Filter component-->
-      <!--  <div class ="mb-3" id="filterComponet">
+       <!-- <div class ="mb-3" id="filterComponet">
             <label for="filterTitle">Filter by Title:</label>
             <input type="text" class="form-control" id="filteTitle" palceholder="Enter title">
         </div>  -->
