@@ -1,5 +1,7 @@
 "use strict";
 
+document.addEventListener("DOMContentLoaded",function(){
+
 //Get the parent element 
 const advertisementsContainer = document.getElementById("advertisements");
 
@@ -12,15 +14,15 @@ const label = document.createElement("label");
 label.setAttribute("for","filterTitle");
 label.textContent="Filter by title:";
 
-const input1 = document.createElement("input");
-input1.type= "text";
-input1.classList.add("form-control");
-input1.id= "filterTitle";
-input1.placeholder="Enter title";
+const filterInput = document.createElement("input");
+filterInput.type= "text";
+filterInput.classList.add("form-control");
+filterInput.id= "filterTitle";
+filterInput.placeholder="Enter title";
 
 //Append label and input elemnts to the filter component
 filterComponent.appendChild(label);
-filterComponent.appendChild(input1);
+filterComponent.appendChild(filterInput);
 
 //Append the filter component toi the container
 advertisementsContainer.prepend(filterComponent);
@@ -28,13 +30,13 @@ advertisementsContainer.prepend(filterComponent);
 //Advertisement data
 const advertisementsData=[
   {
-    title: 'Ad1',
+    title: 'Ad 1',
     description: 'This is the first advertisement',
     image: 'https://via.placeholder.com/150',
     contact: 'contact1@example.com'
   },
   {
-    title: 'Ad2',
+    title: 'Ad 2',
     description: 'This is the second advertisement',
     image: 'https://via.placeholder.com/150',
     contact: 'contact2@example.com'
@@ -66,11 +68,9 @@ const advertisementsData=[
 ];
 
 function createCard(advertisement){
-  console.log("createCard executed");
 
   //Create card element
   const card = document.createElement("div");
-  card.id="advertisements";
   card.classList.add("card","mb-4" ,"col-md-4");
   
   //Create card image
@@ -83,7 +83,7 @@ function createCard(advertisement){
   const cardBody = document.createElement("div");
   cardBody.classList.add("card-body");
 
-  //Create the card body element
+  //Create the card title element
   const cardTitle = document.createElement("h5");
   cardTitle.classList.add("card-title");
   cardTitle.textContent=advertisement.title;
@@ -101,10 +101,24 @@ function createCard(advertisement){
     alert("Contact: contact1@example.com");
   });
 
+  //Create the contact information toggle button
+  const toggleButton = document.createElement("button");
+  toggleButton.classList.add("btn","btn-info","btn-sm","mt-2");
+  toggleButton.textContent="Toggle Contact Information";
+  toggleButton.addEventListener("click",function(){
+    if(contactText.textContent === "Contact: ***"){
+      contactText.textContent = "Contact:"+advertisement.contact;
+    }else{
+      contactText.textContent="Contact: ***";
+    }
+  });
+
+
   //Append the title,text and contact information
   cardBody.appendChild(cardTitle);
   cardBody.appendChild(cardText);
   cardBody.appendChild(contactText);
+  cardBody.appendChild(toggleButton);
 
   //Create the card  footer element
   const cardFooter = document.createElement("div");
@@ -115,7 +129,7 @@ function createCard(advertisement){
   button.classList.add("btn","btn-info","btn-block");
   button.textContent="Details";
   button.addEventListener("click",function(){
-    alert("Contact: contact1@example.com");
+    alert("Contact: "+advertisement.contact);
   });
 
   //Append the button to the card footer
@@ -131,3 +145,22 @@ function createCard(advertisement){
 }
 //Create cards for each advertisement
 advertisementsData.forEach(createCard);
+
+//Function for filtering
+function filterAdvertisements(){
+  const filterText = filterInput.value.toLowerCase();
+
+  advertisementsContainer.querySelectorAll(".card").forEach(function(card) {
+    const title = card.querySelector(".card-title").textContent.toLowerCase();
+
+    if(title.includes(filterText)) {
+      card.style.display="block";
+    } else{
+      card.style.display="none";
+    }
+  });
+}
+
+
+filterInput.addEventListener("keyup",filterAdvertisements);
+});
