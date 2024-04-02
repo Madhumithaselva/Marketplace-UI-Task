@@ -5,10 +5,9 @@ document.addEventListener("DOMContentLoaded",function(){
 //Get the parent element 
 const advertisementsContainer = document.getElementById("advertisements");
 
-//Create tbe filter component
+//Create the filter component
 const filterComponent = document.createElement("div");
-filterComponent.classList.add("md-3");
-filterComponent.id ="filterComponet";
+filterComponent.classList.add("mb-3");
 
 const label = document.createElement("label");
 label.setAttribute("for","filterTitle");
@@ -24,8 +23,11 @@ filterInput.placeholder="Enter title";
 filterComponent.appendChild(label);
 filterComponent.appendChild(filterInput);
 
+//Append the filter component to the container
+advertisementsContainer.parentNode.insertBefore(filterComponent,advertisementsContainer);
+
 //Append the filter component toi the container
-advertisementsContainer.prepend(filterComponent);
+//advertisementsContainer.prepend(filterComponent);
 
 //Advertisement data
 const advertisementsData=[
@@ -68,9 +70,10 @@ const advertisementsData=[
 ];
 
 function renderAdvertisements(){
-  while(advertisementsContainer.firstChild){
+  advertisementsContainer.innerHTML='';
+  /*while(advertisementsContainer.firstChild){
     advertisementsContainer.removeChild(advertisementsContainer.firstChild);
-  }
+  }*/
 
   //Create cards for each advertisement
   advertisementsData.forEach(function(advertisement,index ){
@@ -176,5 +179,5 @@ function filterAdvertisements(){
   });
 }
 
-filterInput.addEventListener("keyup",filterAdvertisements);
+filterInput.addEventListener("input",filterAdvertisements);
 });
